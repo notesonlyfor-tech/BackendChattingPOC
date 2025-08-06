@@ -10,6 +10,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+//	@Autowired
+//	private SimpMessagingTemplate messagingTemplate;
+//	
+//	@Autowired
+//	private ChatMessageRepository messageRepo;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -18,10 +23,24 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .withSockJS();
     }
 
+//    @Override
+//    public void configureMessageBroker(MessageBrokerRegistry registry) {
+//        registry.setApplicationDestinationPrefixes("/app");      // For client -> server
+//        registry.enableSimpleBroker("/topic");                   // For server -> client
+//    }
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app");      // For client -> server
-        registry.enableSimpleBroker("/topic");                   // For server -> client
+        registry.enableSimpleBroker("/queue", "/topic");
+        registry.setApplicationDestinationPrefixes("/app");
+        registry.setUserDestinationPrefix("/user");
     }
+    
+//    @MessageMapping("/chat")
+//    public void sendMessage(ChatMessage message) {
+//        messageRepo.save(message); // Save to DB
+//        messagingTemplate.convertAndSendToUser(
+//            message.getReceiver(), "/queue/messages", message
+//        );
+//    }
 }
 
