@@ -28,6 +28,8 @@ public class ChatMessage {
     private String sender;
     private String receiver;
     private String content;
+    
+    private String imageUrl;
 
     @CreationTimestamp
     private LocalDateTime timestamp;
